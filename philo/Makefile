@@ -2,16 +2,16 @@ NAME = philo
 CC = gcc
 CFLAGS = -Wall -Wextra -Werror
 M_SRC = philo.c \
-		parser.c \ 
+		parser.c \
 		allocate.c \
-		threads.C
-M_OBJS = $(M_SRC: .c=.o)
+		threads.c
+M_OBJS = $(M_SRC:%.c=%.o)
 
 all :$(NAME)
 $(NAME) : $(M_OBJS) philo.h
-		$(CC) $(CFLAGS) $(M_OBJS) -o $@
+		$(CC) $(CFLAGS) $(M_OBJS) -o $@ -fsanitize=address -g
 
-%.o : %.c
+%.o : %.c philo.h
 		$(CC) $(CFLAGS) -c $< -o $@
 clean: 
 		rm -rf $(M_OBJS)
